@@ -1,0 +1,80 @@
+@font-face {
+    font-family: "Greek";
+    src: url('fonts/Greek-Freak.ttf');
+}
+
+body {
+background-color: rgb(216, 212, 180);
+}
+header {
+    text-align: center;
+    font: normal 25pt Greek ;
+}
+stats {
+    text-align: center;
+    font: normal 15pt Greek ;
+    display: flex;
+    justify-content: space-between;
+    margin: 50px;
+    padding: 0 250px;
+}
+ModalTitle{
+    text-align: center;
+    font: normal 25pt Greek ;
+}
+ModalText{
+    text-align: center;
+    font: normal 7pt Greek ;
+}
+img {
+    width: 30%;
+    height: 30%;
+}
+.container {
+    text-align: center;
+    margin: 120px;
+    padding: 0 480px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .fightBtn, .restBtn {
+    height: 50px;
+    width: 180px;
+    border-radius: 5px;
+    border: none;
+    font: normal 25pt Greek;
+    margin: 0; /* Remover a centralização automática */
+  }
+  
+  .fightBtn {
+    background-color: rgb(119, 35, 35);
+    color: white;
+  }
+  
+  .restBtn {
+    background-color: rgb(60, 126, 77);
+    color: white;
+  }
+  .Modal {
+    background-color: rgb(216, 212, 180);
+    border: none;
+    border-radius: 5px;
+    width: 500px;
+    height: 500px;
+    text-align: center;
+  }
+  .closeModal {
+    height: 50px;
+    width: 180px;
+    border-radius: 5px;
+    border: none;
+    font: normal 25pt Greek;
+    margin-top: 15px; /* Remover a centralização automática */
+    background-color: rgb(46, 80, 126);
+    color: white;
+  }
+
+  dialog::backdrop {
+    background-color: rgb(0 0 0 / .8);
+  }

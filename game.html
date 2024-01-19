@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <header>
+      <h1>RPG ADVENTURE</h1>
+    </header>
+    <stats>
+      <h1>Voce esta no sala <p id="dungeonLvlText"></p> da dungeon</h1> 
+      <h1>Voce possui <p id="lifePointsText"></p> pontos de vida</h1>
+      <h1>Sua forca e de <p id="atckPointsText"></p> pontos </h1>  
+    </stats>
+    <action class="container">
+      <button id="fightBtn" class="fightBtn">LUTAR</button>
+      <button id="restBtn" class="restBtn">DESCANSAR</button>
+    </action>
+
+    <dialog id="fightModalSlime" class="Modal">
+      <ModalTitle><h1>LUTA</h1></ModalTitle>
+      <ModalText><h1>Voce encontrou um Slime selvagem !</h1></ModalText>
+      <img src="images/slime.png" />
+      <ModalText><h1>Voces lutaram, e por ter mais de 2 de forca voce conseguiu a vitoria, onde encontrou uma pocao que te deixou um pouco mais forte, porem perdeu 1 pontos de vida</h1></ModalText>
+      <button id="closeModalFightSlime" class="closeModal">Prosseguir</button>
+    </dialog>
+
+    <dialog id="fightModalGoblin" class="Modal">
+      <ModalTitle><h1>LUTA</h1></ModalTitle>
+      <ModalText><h1>Voce encontrou um Goblin selvagem !</h1></ModalText>
+      <img src="images/goblin.png" />
+      <ModalText><h1 id="goblinFightResult"></h1></ModalText>
+      <button id="closeModalFightGoblin" class="closeModal">Prosseguir</button>
+    </dialog>
+
+    <dialog id="fightModalTroll" class="Modal">
+      <ModalTitle><h1>LUTA</h1></ModalTitle>
+      <ModalText><h1>Voce encontrou um Troll selvagem !</h1></ModalText>
+      <img src="images/troll.png" />
+      <ModalText><h1 id="trollFightResult"></h1></ModalText>
+      <button id="closeModalFightTroll" class="closeModal">Prosseguir</button>
+    </dialog>
+
+    <dialog id="fightModalDragon" class="Modal">
+      <ModalTitle><h1>LUTA</h1></ModalTitle>
+      <ModalText><h1>Voce encontrou um Dragao selvagem !</h1></ModalText>
+      <img src="images/dragao.png" />
+      <ModalText><h1 id="dragonFightResult"></h1></ModalText>
+      <button id="closeModalFightDragon" class="closeModal">Prosseguir</button>
+    </dialog>
+
+    <dialog id="deathModal" class="Modal">
+      <ModalTitle><h1>DERROTA</h1></ModalTitle >
+      <ModalText><h1>Voce morreu</h1></ModalText>
+      <img src="images/morte.png" />
+      <ModalText><h1 id="dragonFightResult"></h1></ModalText>
+      <button id="closeModalDeath" class="closeModal">Reniciar</button>
+    </dialog>
+
+    <dialog id="victoryModal" class="Modal">
+      <ModalTitle><h1>VITORIA</h1></ModalTitle>
+      <ModalText><h1>Voce foi o grnde campeao, parabens!</h1></ModalText>
+      <img src="images/vitoria.png" />
+      <ModalText><h1 id="dragonFightResult"></h1></ModalText>
+      <button id="closeModalWin" class="closeModal">Reniciar</button>
+    </dialog>
+
+    <dialog id="restModal" class="Modal">
+      <ModalTitle><h1>DESCANSO</h1></ModalTitle>
+      <ModalText><h1>Preparou seu equipamento e recuperou 2 de vida</h1></ModalText>
+      <img src="images/acampamento.png" />
+      <ModalText><h1>Voces lutaram, e por sorte vc conseguiu a vitoria, porem perdeu 5 pontos de vida</h1></ModalText>
+      <button id="closeModalRest" class="closeModal">Prosseguir</button>    
+    </dialog>
+  <script src="script.js"></script>
+</body>
+</html>
