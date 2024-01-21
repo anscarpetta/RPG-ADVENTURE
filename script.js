@@ -39,124 +39,101 @@ atckPointsText.innerText = atckPoints;
 const modalDeath = document.querySelector("#deathModal")
 const modalVictory = document.querySelector("#victoryModal")
 
-fightBtn.addEventListener('click', function() {
-
-    if (dungeonLvl <= 3){
-        const modalFight = document.querySelector("#fightModalSlime")
-        
-            modalFight.showModal()
-            dungeonLvl = dungeonLvl + 1;
-            lifePoints = lifePoints - 1
-            atckPoints = atckPoints + 1;
-            lifePointsText.innerText = lifePoints;
-            dungeonLvlText.innerText = dungeonLvl;
-            atckPointsText.innerText = atckPoints;
-
-    
-        closeModalFightS.onclick = function() {
-            modalFight.close()
-                if (lifePoints <= 0){
-                modalDeath.showModal()
-                closeModalDeath.onclick = function() {
-                    location.reload()
-                }
-            }
-        }
-    } 
-    else if (dungeonLvl <= 6)
+const monsters = [
     {
-        const modalFight = document.querySelector("#fightModalGoblin")
-            modalFight.showModal()
-            if (atckPoints < 6){
-            dungeonLvl = dungeonLvl + 1;
-            lifePoints = lifePoints - 4;
-            lifePointsText.innerText = lifePoints;
-            dungeonLvlText.innerText = dungeonLvl;
-            goblinFightResult.innerText = GOBLIN_DEFEAT_TEXT
-            }else{
-            dungeonLvl = dungeonLvl + 1;
-            lifePoints = lifePoints - 2;
-            atckPoints = atckPoints + 2;
-            atckPointsText.innerText = atckPoints;
-            lifePointsText.innerText = lifePoints;
-            dungeonLvlText.innerText = dungeonLvl;
-            goblinFightResult.innerText = GOBLIN_WIN_TEXT
-
-            }
-        closeModalFightG.onclick = function() {
-            modalFight.close()
-            if (lifePoints <= 0){
-                modalDeath.showModal()
-                closeModalDeath.onclick = function() {
-                    location.reload()
-                }
-            }
-        }
-    
-    }
-    else if (dungeonLvl <= 9)
+        name: 'Slime',
+        encounterLevels: [1, 3],
+        life: 1,
+        strenght: 1,
+        onWin: () => {
+            atckPoints += 1;
+        },
+        closeButton: closeModalFightS,
+    }, 
     {
-        const modalFight = document.querySelector("#fightModalTroll")
-            modalFight.showModal()
-            if (atckPoints < 10){
-                dungeonLvl = dungeonLvl + 1;
-                lifePoints = lifePoints - 6;
-                lifePointsText.innerText = lifePoints;
-                dungeonLvlText.innerText = dungeonLvl;
-                trollFightResult.innerText = TROLL_DEFEAT_TEXT
-                }else{
-                dungeonLvl = dungeonLvl + 1;
-                lifePoints = lifePoints - 3;
-                atckPoints = atckPoints + 4;
-                atckPointsText.innerText = atckPoints;
-                lifePointsText.innerText = lifePoints;
-                dungeonLvlText.innerText = dungeonLvl;
-                trollFightResult.innerText = TROLL_WIN_TEXT
-    
-                }
+        name: 'Goblin',
+        encounterLevels: [4, 6],
+        life: 6,
+        strenght: 2,
+        onWin: () => {
+            atckPoints += 2;
+        },
+        closeButton: closeModalFightG,
+        defeatText: GOBLIN_DEFEAT_TEXT,
+        winText: GOBLIN_WIN_TEXT,
+        fightResultEl: goblinFightResult,
+    }, 
+    {
+        name: 'Troll',
+        encounterLevels: [7, 9],
+        life: 10,
+        strenght: 3,
+        onWin: () => {
+            atckPoints += 4;
+        },
+        closeButton: closeModalFightT,
+        defeatText: TROLL_DEFEAT_TEXT,
+        winText: TROLL_WIN_TEXT,
+        fightResultEl: trollFightResult,
+    }, 
+    {
+        name: 'Dragon',
+        encounterLevels: [10, 10],
+        life: 20,
+        strenght: 100,
+        closeButton: closeModalFightD,
+        defeatText: DRAGON_DEFEAT_TEXT,
+        winText: DRAGON_WIN_TEXT,
+        fightResultEl: dragonFightResult,
+    }, 
+]
 
-        closeModalFightT.onclick = function() {
-            modalFight.close()
+function fight() {
+    // Determina qual monstro foi encontrado
+    const monster = monsters.find((monster) => {
+        const [min, max] = monster.encounterLevels;
+        return dungeonLvl >= min && dungeonLvl <= max;
+    });
 
-            if (lifePoints <= 0){
-                modalDeath.showModal()
-                closeModalDeath.onclick = function() {
-                    location.reload()
-                }
-            }
-        }
-
-}
-else if (dungeonLvl = 10)
-{
-
-    const modalFight = document.querySelector("#fightModalDragon")
-        modalFight.showModal()
-        if(atckPoints > 19){
-            dragonFightResult.innerText = DRAGON_WIN_TEXT
-        }else{
-            dragonFightResult.innerText = DRAGON_DEFEAT_TEXT
-            lifePoints = lifePoints - 100
-        }
-    closeModalFightD.onclick = function() {
-        modalFight.close()
-            if (lifePoints <= 0){
-                modalDeath.showModal()
-                closeModalDeath.onclick = function() {
-                    location.reload()
-                }
-            }else{
-                modalVictory.showModal()
-                closeModalWin.onclick = function() {
-                    location.reload()
-                }
-            }
+    if (!monster) {
+        throw new Error('Monstro não encontrado');
     }
 
+    // Abre o modalFight para o monstro específico
+    const modalFight = document.querySelector(`#fightModal${monster.name}`)
+    modalFight.showModal()
+
+    // Verifica se vc pode derrotar o monstro ou não
+    if (atckPoints >= monster.life) { // Vitória
+        lifePoints -= monster.strenght;
+        monster.onWin && monster.onWin();
+    } else { // Derrota
+        lifePoints -= monster.strenght * 2;
+    }
+
+    dungeonLvl += 1;
+    atckPointsText.innerText = atckPoints;
+    lifePointsText.innerText = lifePoints;
+    dungeonLvlText.innerText = dungeonLvl;
+
+    if (monster.fightResultEl) {
+        monster.fightResultEl.innerText = GOBLIN_WIN_TEXT;
+    }
+
+    if (monster.closeButton) {
+        monster.closeButton.onclick = function() {
+            modalFight.close()
+            if (lifePoints <= 0){
+                modalDeath.showModal()
+                closeModalDeath.onclick = function() {
+                    location.reload()
+                }
+            }
+        }
+    }
 }
-});
 
-
+fightBtn.addEventListener('click', fight);
 
 
 
